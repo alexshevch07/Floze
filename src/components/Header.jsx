@@ -43,7 +43,7 @@ export default function Header() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="site-container py-4 flex items-center justify-between">
         {/* Logo — exact brand asset, used as a plain image. No redraw, no text recreation. */}
         <a href="#" className="flex items-center group" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <img
@@ -97,7 +97,7 @@ export default function Header() {
           mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         } bg-cream/95 backdrop-blur-md`}
       >
-        <div className="px-6 py-4 flex flex-col gap-4">
+        <div className="site-container py-4 flex flex-col gap-4">
           {navLinks.map((link) => (
             <a
               key={link.href}

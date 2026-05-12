@@ -1,13 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Single shared typography system for RU + EN.
- * Inter (--font-heading and --font-body) includes full Cyrillic + Latin
- * support in the same font family across all weights (400–800).
- * Language switching only replaces text strings — font family, weight,
- * size, letter-spacing, line-height, and button typography stay
- * identical in both languages. No conditional font logic anywhere.
+ * Typography: Nebulica (headings) + Roboto Flex (body), local files in /fonts.
+ * Same stacks for RU and EN — only copy changes on language switch.
  */
+
+@font-face {
+  font-family: 'Nebulica';
+  src: url('/fonts/Nebulica-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url('/fonts/RobotoFlex-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   --color-cream: #FFF8F0;
@@ -22,8 +34,17 @@
   --color-orange-glow: #FF995920;
   --color-footer-bg: #2C1E14;
   --color-footer-text: #D4C5B5;
-  --font-heading: 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Nebulica', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Shared horizontal rhythm: header, hero, footer, and wide sections align to the same edges */
+@utility site-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  box-sizing: border-box;
 }
 
 /* Global Styles */

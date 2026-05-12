@@ -17,7 +17,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="py-24 sm:py-32">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="site-container">
         <div className="text-center mb-16 reveal">
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-brown mb-4">
             {t.howItWorks.title}

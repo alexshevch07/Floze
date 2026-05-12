@@ -10,38 +10,32 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="flex items-start pt-32 pb-16 overflow-hidden" style={{ minHeight: '100vh' }}>
-      <div className="max-w-6xl mx-auto px-6 w-full">
-        <div className="flex flex-col lg:flex-row gap-8" style={{ alignItems: 'flex-start' }}>
+    <section id="hero" className="overflow-x-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pb-24">
+      <div className="site-container">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 items-start">
 
           {/* Left — text */}
-          <div style={{ flex: '0 0 50%', maxWidth: '50%' }}>
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] text-brown animate-fade-in-up whitespace-pre-line"
-              style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900, letterSpacing: '-0.02em' }}
-            >
+          <div className="min-w-0 flex flex-col">
+            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-6xl leading-[1.08] tracking-[-0.02em] text-brown animate-fade-in-up whitespace-pre-line">
               {t.hero.heading}
             </h1>
-            <p className="mt-6 text-lg text-brown-muted leading-relaxed animate-fade-in-up animation-delay-200" style={{ maxWidth: '400px' }}>
+            <p className="mt-6 max-w-xl text-base sm:text-lg text-brown-muted leading-relaxed animate-fade-in-up animation-delay-200">
               {t.hero.description}
             </p>
             <button
               id="hero-cta"
               onClick={handleTryClick}
-              className="mt-8 px-10 py-4 rounded-full bg-orange text-white text-lg font-bold hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_6px_30px_rgba(255,153,89,0.4)] hover:-translate-y-0.5 animate-fade-in-up animation-delay-300 cursor-pointer"
+              className="mt-8 self-start px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-orange text-white text-base sm:text-lg font-bold hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_6px_30px_rgba(255,153,89,0.4)] hover:-translate-y-0.5 animate-fade-in-up animation-delay-300 cursor-pointer"
             >
               {t.hero.cta}
             </button>
-            <p className="mt-4 text-sm text-brown-muted/70 animate-fade-in-up animation-delay-400">
+            <p className="mt-4 max-w-xl text-sm text-brown-muted/70 animate-fade-in-up animation-delay-400">
               {t.hero.subtext}
             </p>
           </div>
 
-          {/* Right — монитор, прибит к верху */}
-          <div
-            className="animate-fade-in-up animation-delay-300"
-            style={{ flex: '0 0 50%', maxWidth: '50%' }}
-          >
+          {/* Right — монитор */}
+          <div className="min-w-0 w-full animate-fade-in-up animation-delay-300">
             <div className="relative w-full">
               <div className="relative bg-white rounded-2xl shadow-[0_8px_60px_rgba(61,43,31,0.12)] border border-cream-dark overflow-hidden">
                 <div className="flex items-center gap-2 px-4 py-3 bg-cream-mid border-b border-cream-dark/50">
