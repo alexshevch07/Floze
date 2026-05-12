@@ -1,0 +1,55 @@
+import { useState, useEffect } from 'react';
+import { useLanguage } from '../LanguageContext';
+
+export default function BetaModal({ isOpen, onClose }) {
+  const { t } = useLanguage();
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      const timeout = setTimeout(() => { setEmail(''); setSubmitted(false); }, 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email.trim()) setSubmitted(true);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop bg-brown/30" onClick={onClose}>
+      <div className="relative w-full max-w-md bg-cream rounded-3xl shadow-[0_16px_80px_rgba(61,43,31,0.15)] p-8 sm:p-10 animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
+        <button id="modal-close" onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-cream-dark/50 hover:bg-cream-dark transition-colors duration-200 text-brown-muted hover:text-brown cursor-pointer" aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+        </button>
+        {!submitted ? (
+          <div>
+            <h3 className="font-heading text-2xl font-bold text-brown mb-3">{t.modal.title}</h3>
+            <p className="text-sm text-brown-muted mb-8 leading-relaxed">{t.modal.description}</p>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input id="beta-email-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t.modal.emailPlaceholder} required className="w-full px-5 py-3.5 rounded-2xl bg-white border border-cream-dark/40 text-brown placeholder:text-brown-muted/40 focus:outline-none focus:border-orange/50 focus:shadow-[0_0_0_3px_rgba(255,153,89,0.1)] transition-all duration-300 text-base" />
+              <button id="beta-submit" type="submit" className="w-full px-5 py-3.5 rounded-2xl bg-orange text-white font-bold text-base hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,153,89,0.35)] cursor-pointer">{t.modal.submit}</button>
+            </form>
+          </div>
+        ) : (
+          <div className="text-center py-6">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange/10 flex items-center justify-center animate-fade-in-up">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#FF9959" strokeWidth="2.5" fill="none"/><path d="M12 20L18 26L28 14" stroke="#FF9959" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </div>
+            <h3 className="font-heading text-2xl font-bold text-brown mb-2 animate-fade-in-up animation-delay-100">{t.modal.successTitle}</h3>
+            <p className="text-brown-muted animate-fade-in-up animation-delay-200">{t.modal.successText}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
