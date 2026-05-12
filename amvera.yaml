@@ -1,0 +1,17 @@
+meta:
+  environment: node.js
+  tool: npm
+  version: "20"
+
+build:
+  skip: false
+  additionalCommands: npm run build
+  artifacts:
+    "*": /
+
+run:
+  scriptArguments: ""
+  nodeArguments: ""
+  command: npm start
+  persistenceMount: /data
+  containerPort: 80
