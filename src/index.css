@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * Headings: Nebulica (bundled) + Onest (Google) for Cyrillic where Nebulica has no glyphs.
+ * Headings: Nebulica (bundled) for Latin; RU uses self-hosted Onest (see html[lang="ru"] rule).
  * Body: Roboto Flex (bundled) + Onest fallback. RU/EN use the same stacks.
  */
 
@@ -58,6 +58,17 @@
    */
   .font-heading {
     font-family: var(--font-heading);
+    font-weight: 800;
+    font-style: normal;
+    font-synthesis: none;
+  }
+
+  /*
+   * Nebulica has no Cyrillic glyphs — force self-hosted Onest for RU so headings
+   * never fall through to the system UI font.
+   */
+  html[lang='ru'] .font-heading {
+    font-family: 'Onest', ui-sans-serif, system-ui, sans-serif;
     font-weight: 800;
     font-style: normal;
     font-synthesis: none;

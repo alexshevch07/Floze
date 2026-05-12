@@ -1,10 +1,14 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import translations from './i18n';
 
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState('ru');
+
+  useEffect(() => {
+    document.documentElement.lang = lang === 'en' ? 'en' : 'ru';
+  }, [lang]);
 
   const toggleLang = useCallback(() => {
     setLang((prev) => (prev === 'ru' ? 'en' : 'ru'));
