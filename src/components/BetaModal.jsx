@@ -33,7 +33,7 @@ export default function BetaModal({ isOpen, onClose }) {
         </button>
         {!submitted ? (
           <div>
-            <h3 className="font-heading text-2xl font-bold text-brown mb-3">{t.modal.title}</h3>
+            <h3 className="font-heading text-2xl text-brown mb-3">{t.modal.title}</h3>
             <p className="text-sm text-brown-muted mb-8 leading-relaxed">{t.modal.description}</p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input id="beta-email-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t.modal.emailPlaceholder} required className="w-full px-5 py-3.5 rounded-2xl bg-white border border-cream-dark/40 text-brown placeholder:text-brown-muted/40 focus:outline-none focus:border-orange/50 focus:shadow-[0_0_0_3px_rgba(255,153,89,0.1)] transition-all duration-300 text-base" />
@@ -45,7 +45,7 @@ export default function BetaModal({ isOpen, onClose }) {
             <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange/10 flex items-center justify-center animate-fade-in-up">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#FF9959" strokeWidth="2.5" fill="none"/><path d="M12 20L18 26L28 14" stroke="#FF9959" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
-            <h3 className="font-heading text-2xl font-bold text-brown mb-2 animate-fade-in-up animation-delay-100">{t.modal.successTitle}</h3>
+            <h3 className="font-heading text-2xl text-brown mb-2 animate-fade-in-up animation-delay-100">{t.modal.successTitle}</h3>
             <p className="text-brown-muted animate-fade-in-up animation-delay-200">{t.modal.successText}</p>
           </div>
         )}

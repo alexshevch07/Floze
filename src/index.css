@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 /*
- * Typography: Nebulica (headings) + Roboto Flex (body), local files in /fonts.
- * Same stacks for RU and EN — only copy changes on language switch.
+ * Headings: Nebulica (bundled) + Onest (Google) for Cyrillic where Nebulica has no glyphs.
+ * Body: Roboto Flex (bundled) + Onest fallback. RU/EN use the same stacks.
  */
 
+/* Bundled via Vite → hashed URLs in /assets/ so production never 404s fonts */
 @font-face {
   font-family: 'Nebulica';
-  src: url('/fonts/Nebulica-ExtraBold.otf') format('opentype');
-  font-weight: 800;
+  src: url('./assets/fonts/Nebulica-ExtraBold.otf') format('opentype');
+  font-weight: 700 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Roboto Flex';
-  src: url('/fonts/RobotoFlex-Variable.ttf') format('truetype');
+  src: url('./assets/fonts/RobotoFlex-Variable.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -34,22 +35,39 @@
   --color-orange-glow: #FF995920;
   --color-footer-bg: #2C1E14;
   --color-footer-text: #D4C5B5;
-  --font-heading: 'Nebulica', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif;
+  /* Onest: matches display weight for RU/EN when Nebulica lacks Cyrillic glyphs */
+  --font-heading: 'Nebulica', 'Onest', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Roboto Flex', 'Onest', ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Shared horizontal rhythm: header, hero, footer, and wide sections align to the same edges */
 @utility site-container {
+  box-sizing: border-box;
   width: 100%;
   max-width: 72rem;
   margin-inline: auto;
-  padding-inline: 1.5rem;
-  box-sizing: border-box;
+  padding-left: max(1.375rem, calc(env(safe-area-inset-left, 0px) + 0.875rem));
+  padding-right: max(1.375rem, calc(env(safe-area-inset-right, 0px) + 0.875rem));
+}
+
+@layer utilities {
+  /*
+   * Nebulica is a single master; lock weight + no faux-bold.
+   * Keep this AFTER Tailwind’s font-family utility by using both properties here
+   * so `font-bold` (700) on the same node cannot win in the cascade.
+   */
+  .font-heading {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-style: normal;
+    font-synthesis: none;
+  }
 }
 
 /* Global Styles */
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {

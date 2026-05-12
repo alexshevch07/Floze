@@ -6,7 +6,7 @@ function FeatureCard({ icon, title, text, delay }) {
       <div className="w-16 h-16 rounded-2xl bg-orange-light flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
         <span className="text-3xl">{icon}</span>
       </div>
-      <h3 className="font-heading text-xl font-bold text-brown mb-3">{title}</h3>
+      <h3 className="font-heading text-xl text-brown mb-3">{title}</h3>
       <p className="text-sm text-brown-muted leading-relaxed">{text}</p>
     </div>
   );
@@ -19,7 +19,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="py-24 sm:py-32">
       <div className="site-container">
         <div className="text-center mb-16 reveal">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-brown mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl text-brown mb-4">
             {t.howItWorks.title}
           </h2>
           <p className="text-lg text-brown-muted">
