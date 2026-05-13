@@ -117,7 +117,12 @@ const server = http.createServer(async (req, res) => {
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || "application/octet-stream";
-  res.writeHead(200, { "Content-Type": contentType });
+  const headers = { "Content-Type": contentType };
+  // SPA shell: avoid stale index after deploy (Amvera / CDN / browser cache).
+  if (ext === ".html") {
+    headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+  }
+  res.writeHead(200, headers);
   createReadStream(filePath).pipe(res);
 });
 
