@@ -14,10 +14,9 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { label: t.nav.about, href: '#about' },
+    { label: t.nav.product, href: '#product' },
     { label: t.nav.mission, href: '#mission' },
     { label: t.nav.howItWorks, href: '#how-it-works' },
-    { label: t.nav.contacts, href: '#footer' },
   ];
 
   const handleNavClick = (e, href) => {
@@ -43,9 +42,15 @@ export default function Header() {
           : 'bg-transparent'
       }`}
     >
-      <div className="site-container py-4 flex items-center justify-between">
-        {/* Logo — exact brand asset, used as a plain image. No redraw, no text recreation. */}
-        <a href="#" className="flex items-center group" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+      <div className="site-container py-4 flex items-center justify-between md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+        <a
+          href="#"
+          className="flex shrink-0 items-center group md:justify-self-start"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <img
             src="/floze-logo.png"
             alt="Floze"
@@ -53,45 +58,43 @@ export default function Header() {
           />
         </a>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center justify-center gap-8 md:col-start-2">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-sm font-medium text-brown-muted hover:text-brown transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-orange after:rounded-full after:transition-all after:duration-300 hover:after:w-full"
+              className="text-sm font-medium text-brown-muted hover:text-brown transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-orange after:rounded-full after:transition-all after:duration-300 hover:after:w-full whitespace-nowrap"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Right controls */}
-        <div className="hidden md:flex items-center gap-4">
-          <LanguageSwitcher />
+        <div className="flex shrink-0 items-center justify-end gap-4 md:col-start-3 md:justify-self-end">
+          <div className="hidden md:flex items-center gap-4">
+            <LanguageSwitcher />
+            <button
+              id="header-beta-btn"
+              onClick={handleBetaClick}
+              className="px-5 py-2 rounded-full bg-orange text-white text-sm font-semibold hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,153,89,0.35)] cursor-pointer whitespace-nowrap"
+            >
+              {t.nav.betaTest}
+            </button>
+          </div>
+
           <button
-            id="header-beta-btn"
-            onClick={handleBetaClick}
-            className="px-5 py-2 rounded-full bg-orange text-white text-sm font-semibold hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,153,89,0.35)] cursor-pointer"
+            className="md:hidden flex flex-col gap-1.5 cursor-pointer p-2"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
-            {t.nav.betaTest}
+            <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
-
-        {/* Mobile burger */}
-        <button
-          className="md:hidden flex flex-col gap-1.5 cursor-pointer p-2"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-        </button>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-400 ${
           mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'

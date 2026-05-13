@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- context + hook pattern */
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import translations from './i18n';
 

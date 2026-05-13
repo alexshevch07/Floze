@@ -1,10 +1,9 @@
 const translations = {
   ru: {
     nav: {
-      about: 'Кто мы',
+      product: 'Наш продукт',
       mission: 'Наша миссия',
       howItWorks: 'Как это работает',
-      contacts: 'Контакты',
       betaTest: 'Бета-тест',
     },
     hero: {
@@ -13,16 +12,16 @@ const translations = {
       cta: 'Попробовать',
       subtext: 'Бесплатно на этапе бета-тестирования • Windows',
     },
-    about: {
-      title: 'Кто мы',
-      text: 'Floze AG — команда, которая верит, что технологии должны помогать людям работать осознанно. Мы создаём инструменты, которые возвращают контроль над вниманием и временем.',
+    product: {
+      title: 'Наш продукт',
+      text: 'Floze — это настольное приложение для Windows с AI, которое помогает удерживать фокус на задаче: понимает контекст работы, настраивает режим концентрации и убирает лишние уведомления, сайты и приложения, чтобы вы меньше переключались и больше успевали. Мы делаем его для тех, кто устал от шума и хочет спокойно работать в своём ритме.',
     },
     mission: {
       title: 'Наша миссия',
-      text: 'Мы строим будущее, в котором каждый может работать в потоке — без отвлечений, перегрузок и выгорания. AI помогает фокусироваться на том, что действительно важно.',
+      text: 'Мы хотим помочь людям работать осознанно: меньше отвлечений и перегрузки, больше ясности и времени на то, что действительно важно. Наша цель — чтобы технологии возвращали контроль над вниманием, а не отнимали его.',
     },
     howItWorks: {
-      title: 'ОП модель',
+      title: 'Как это работает',
       subtitle: 'Три простых шага к продуктивности',
       cards: [
         {
@@ -57,24 +56,26 @@ const translations = {
       description: 'Напишите свою почту — на неё мы отправим вам ссылку на скачивание и ключ',
       emailPlaceholder: 'your@email.com',
       submit: 'Отправить',
+      sending: 'Отправка…',
       successTitle: 'Готово!',
-      successText: 'Ждите, скоро напишем :)',
+      successText: 'Мы получили вашу заявку и скоро свяжемся с вами.',
+      errorGeneric: 'Не удалось отправить. Попробуйте ещё раз позже.',
+      errorInvalid: 'Проверьте формат адреса почты.',
     },
     footer: {
       privacy: 'Политика конфиденциальности',
       faq: 'FAQ',
       copyright: '© 2026 Floze AG. Все права защищены.',
-      about: 'Кто мы',
+      product: 'Наш продукт',
       mission: 'Наша миссия',
       howItWorks: 'Как это работает',
     },
   },
   en: {
     nav: {
-      about: 'About',
-      mission: 'Mission',
+      product: 'Our product',
+      mission: 'Our mission',
       howItWorks: 'How it works',
-      contacts: 'Contacts',
       betaTest: 'Beta Test',
     },
     hero: {
@@ -83,16 +84,16 @@ const translations = {
       cta: 'Try it',
       subtext: 'Free during beta • Windows',
     },
-    about: {
-      title: 'About',
-      text: 'Floze AG is a team that believes technology should help people work mindfully. We build tools that give you back control over your attention and time.',
+    product: {
+      title: 'Our product',
+      text: 'Floze is a Windows desktop app with AI that helps you stay on task: it understands what you are working on, sets up a focus mode, and quiets notifications, websites, and apps so you switch less and get more done. We are building it for people who are tired of noise and want to work at their own pace.',
     },
     mission: {
-      title: 'Mission',
-      text: 'We are building a future where everyone can work in flow — without distractions, overload, or burnout. AI helps you focus on what truly matters.',
+      title: 'Our mission',
+      text: 'We want to help people work with intention: fewer distractions and overload, more clarity and time for what truly matters. We believe technology should give you back control over your attention, not take it away.',
     },
     howItWorks: {
-      title: 'Operating Model',
+      title: 'How it works',
       subtitle: 'Three simple steps to productivity',
       cards: [
         {
@@ -127,15 +128,18 @@ const translations = {
       description: 'Leave your email — we will send you the download link and access key',
       emailPlaceholder: 'your@email.com',
       submit: 'Submit',
+      sending: 'Sending…',
       successTitle: 'Done!',
-      successText: 'We\'ll contact you soon :)',
+      successText: 'We have received your request and will be in touch soon.',
+      errorGeneric: 'Could not submit. Please try again later.',
+      errorInvalid: 'Please check your email address.',
     },
     footer: {
       privacy: 'Privacy Policy',
       faq: 'FAQ',
       copyright: '© 2026 Floze AG. All rights reserved.',
-      about: 'About',
-      mission: 'Mission',
+      product: 'Our product',
+      mission: 'Our mission',
       howItWorks: 'How it works',
     },
   },

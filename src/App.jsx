@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Mission from './components/Mission';
 import HowItWorks from './components/HowItWorks';
-import Video from './components/Video';
 import Beta from './components/Beta';
 import Footer from './components/Footer';
 
@@ -49,7 +48,6 @@ export default function App() {
         <About />
         <Mission />
         <HowItWorks />
-        <Video />
         <Beta />
       </main>
       <Footer />

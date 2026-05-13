@@ -5,6 +5,8 @@ export default function BetaModal({ isOpen, onClose }) {
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -13,14 +15,45 @@ export default function BetaModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (!isOpen) {
-      const timeout = setTimeout(() => { setEmail(''); setSubmitted(false); }, 300);
+      const timeout = setTimeout(() => {
+        setEmail('');
+        setSubmitted(false);
+        setSending(false);
+        setError('');
+      }, 300);
       return () => clearTimeout(timeout);
     }
   }, [isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email.trim()) setSubmitted(true);
+    setError('');
+    const trimmed = email.trim();
+    if (!trimmed) return;
+
+    setSending(true);
+    try {
+      const res = await fetch('/api/beta-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmed }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        if (data.error === 'invalid_email') {
+          setError(t.modal.errorInvalid);
+        } else {
+          setError(t.modal.errorGeneric);
+        }
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError(t.modal.errorGeneric);
+    } finally {
+      setSending(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -36,8 +69,25 @@ export default function BetaModal({ isOpen, onClose }) {
             <h3 className="font-heading text-2xl text-brown mb-3">{t.modal.title}</h3>
             <p className="text-sm text-brown-muted mb-8 leading-relaxed">{t.modal.description}</p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input id="beta-email-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t.modal.emailPlaceholder} required className="w-full px-5 py-3.5 rounded-2xl bg-white border border-cream-dark/40 text-brown placeholder:text-brown-muted/40 focus:outline-none focus:border-orange/50 focus:shadow-[0_0_0_3px_rgba(255,153,89,0.1)] transition-all duration-300 text-base" />
-              <button id="beta-submit" type="submit" className="w-full px-5 py-3.5 rounded-2xl bg-orange text-white font-bold text-base hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,153,89,0.35)] cursor-pointer">{t.modal.submit}</button>
+              <input
+                id="beta-email-input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t.modal.emailPlaceholder}
+                required
+                disabled={sending}
+                className="w-full px-5 py-3.5 rounded-2xl bg-white border border-cream-dark/40 text-brown placeholder:text-brown-muted/40 focus:outline-none focus:border-orange/50 focus:shadow-[0_0_0_3px_rgba(255,153,89,0.1)] transition-all duration-300 text-base disabled:opacity-60"
+              />
+              {error ? <p className="text-sm text-orange-hover">{error}</p> : null}
+              <button
+                id="beta-submit"
+                type="submit"
+                disabled={sending}
+                className="w-full px-5 py-3.5 rounded-2xl bg-orange text-white font-bold text-base hover:bg-orange-hover transition-all duration-300 hover:shadow-[0_4px_20px_rgba(255,153,89,0.35)] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {sending ? t.modal.sending : t.modal.submit}
+              </button>
             </form>
           </div>
         ) : (

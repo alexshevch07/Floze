@@ -2,6 +2,7 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { recordBetaSignup } from "./lib/beta-signup.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,8 +39,65 @@ function safePathFromUrl(urlPath) {
   return fullPath;
 }
 
-const server = http.createServer((req, res) => {
-  const requestPath = safePathFromUrl(req.url || "/");
+function readRequestBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on("data", (c) => chunks.push(c));
+    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("error", reject);
+  });
+}
+
+async function handleBetaSignup(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  if (req.method !== "POST") {
+    res.writeHead(405, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({ ok: false, error: "method_not_allowed" }));
+    return;
+  }
+
+  let body;
+  try {
+    body = await readRequestBody(req);
+  } catch {
+    res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({ ok: false, error: "bad_request" }));
+    return;
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(body || "{}");
+  } catch {
+    res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({ ok: false, error: "invalid_json" }));
+    return;
+  }
+
+  const result = await recordBetaSignup(parsed.email);
+  const status = result.ok ? 200 : 400;
+  res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
+  res.end(JSON.stringify(result));
+}
+
+const server = http.createServer(async (req, res) => {
+  const urlPath = new URL(req.url || "/", "http://localhost").pathname;
+
+  if (urlPath === "/api/beta-signup") {
+    await handleBetaSignup(req, res);
+    return;
+  }
+
+  const requestPath = safePathFromUrl(urlPath);
   if (!requestPath) {
     res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
     res.end("Forbidden");
@@ -65,4 +123,9 @@ const server = http.createServer((req, res) => {
 
 server.listen(port, "0.0.0.0", () => {
   console.log(`Server started on port ${port}`);
+  if (!process.env.RESEND_API_KEY) {
+    console.log(
+      "Beta-заявки: без RESEND_API_KEY письма не уходят наружу — строки пишутся в beta-signups.log. Для почты задайте RESEND_API_KEY, RESEND_FROM_EMAIL и BETA_NOTIFY_EMAIL."
+    );
+  }
 });
