@@ -6,6 +6,7 @@ import Mission from './components/Mission';
 import HowItWorks from './components/HowItWorks';
 import Beta from './components/Beta';
 import Footer from './components/Footer';
+import SectionDivider from './components/SectionDivider';
 
 export default function App() {
   // Intersection Observer for scroll-reveal animations
@@ -45,11 +46,16 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <SectionDivider />
         <About />
+        <SectionDivider />
         <Mission />
+        <SectionDivider />
         <HowItWorks />
+        <SectionDivider />
         <Beta />
       </main>
+      <SectionDivider />
       <Footer />
     </div>
   );
