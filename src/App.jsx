@@ -55,7 +55,6 @@ export default function App() {
         <SectionDivider />
         <Beta />
       </main>
-      <SectionDivider />
       <Footer />
     </div>
   );
